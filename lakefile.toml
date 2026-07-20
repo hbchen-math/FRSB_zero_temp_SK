@@ -1,0 +1,11 @@
+name = "frsb_formalization"
+version = "0.1.0"
+defaultTargets = ["FRSB"]
+
+[[lean_lib]]
+name = "FRSB"
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.30.0"
