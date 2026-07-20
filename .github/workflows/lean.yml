@@ -1,0 +1,21 @@
+name: Lean
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          nanoda-allow-sorry: false
+      - name: Build Lean project
+        run: lake build
+      - name: Reject placeholders and audit project axioms
+        run: bash scripts/check_placeholders.sh
+      - name: Audit TeX labels
+        run: bash scripts/audit_tex_labels.sh
