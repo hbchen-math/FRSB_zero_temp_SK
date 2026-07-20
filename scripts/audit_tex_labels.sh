@@ -24,12 +24,12 @@ awk '
 ' "$tex_file" > "$active_tex"
 
 while IFS= read -r label; do
-  if ! rg -q -F "\\label{$label}" "$active_tex"; then
+  if ! grep -qF "\\label{$label}" "$active_tex"; then
     echo "Tracked label is missing from the active TeX source: $label" >&2
     missing=1
   fi
 done < <(
-  rg -o --no-filename '`(thm|prop|lem|eq):[^`]+`' README.md FORMALIZATION_STATUS.md AXIOMS.md FRSB \
+  grep -rhoE '`(thm|prop|lem|eq):[^`]+`' README.md FORMALIZATION_STATUS.md AXIOMS.md FRSB \
     | sed -E 's/^`|`$//g' \
     | sort -u
 )
